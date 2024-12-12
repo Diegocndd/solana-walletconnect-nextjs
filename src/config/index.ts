@@ -14,8 +14,6 @@ const solanaWeb3JsAdapter = new SolanaAdapter({
 
 export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
 
-if (!projectId) throw new Error("Project ID is not defined");
-
 export const metadata = {
   name: "AppKit",
   description: "AppKit Example",
@@ -27,5 +25,5 @@ export const config = createAppKit({
   adapters: [solanaWeb3JsAdapter],
   networks: [solanaDevnet, solanaTestnet, solana],
   metadata: metadata,
-  projectId,
+  projectId: projectId ?? "",
 });
