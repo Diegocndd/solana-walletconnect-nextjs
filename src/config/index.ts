@@ -21,9 +21,11 @@ export const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-export const config = createAppKit({
-  adapters: [solanaWeb3JsAdapter],
-  networks: [solanaDevnet, solanaTestnet, solana],
-  metadata: metadata,
-  projectId: projectId ?? "",
-});
+export const initialConfig = () => {
+  createAppKit({
+    adapters: [solanaWeb3JsAdapter],
+    networks: [solanaDevnet, solanaTestnet, solana],
+    metadata: metadata,
+    projectId: projectId ?? "",
+  });
+};
