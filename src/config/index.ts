@@ -1,6 +1,16 @@
-import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-import { cookieStorage, createStorage } from "wagmi";
-import { mainnet, sepolia } from "wagmi/chains";
+import { SolanaAdapter } from "@reown/appkit-adapter-solana/react";
+import { solana, solanaTestnet, solanaDevnet } from "@reown/appkit/networks";
+import {
+  PhantomWalletAdapter,
+  SolflareWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
+import { createAppKit } from "@reown/appkit/react";
+
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
+});
 
 export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
 
@@ -13,13 +23,9 @@ export const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const chains = [mainnet, sepolia] as const;
-export const config = defaultWagmiConfig({
-  chains,
+export const config = createAppKit({
+  adapters: [solanaWeb3JsAdapter],
+  networks: [solanaDevnet, solanaTestnet, solana],
+  metadata: metadata,
   projectId,
-  metadata,
-  ssr: true,
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
 });
